@@ -19,7 +19,36 @@ function calculateAverage(array) {
     return Math.floor(total / count);
 }
 
-// Write function to find most frequent in array to use with weather array
+// Based on code from https://www.w3resource.com/javascript-exercises/javascript-array-exercise-8.php
+const mostFrequent = function(array) {
+    // Stores count of most frequent item
+    let mostFreq = 1;
+
+    // Temporary count to compare against mostFreq
+    let count = 0;
+
+    // Stores most frequent item to be returned
+    let output;
+
+    for (let i = 0; i < array.length; i++) {
+        for (let j = i; j < array.length; j++) {
+            if (array[i] == array[j]) {
+                // Increases temp count for every subsequent occurence of the item
+                count++;
+            }
+            // If temp count is more than mostFreq, then the target item (array[i]) is the current most frequent
+            if (mostFreq < count) {
+                // Sets mostFreq to the number of times the item appeared
+                mostFreq = count;
+                output = array[i];
+            }
+        }
+        // Resets the temp count for the next item in the for loop
+        count = 0
+    }
+
+    return output;
+}
 
 let city = "London";
 let today = {
@@ -121,8 +150,7 @@ fetch(requestURL)
             }
         }
 
-        // waiting on mostFrequent function
-        // dayOne.weather = mostFrequentFunction(dayOneWeatherArray);
+        dayOne.weather = mostFrequent(dayOneWeatherArray);
         dayOne.temp = calculateAverage(dayOneTempArray);
         dayOne.windSpeed = calculateAverage(dayOneWindSpeedArray);
         dayOne.humidity = calculateAverage(dayOneHumidityArray);
