@@ -3,41 +3,11 @@
 
 // Possible solution to avoid excess code:
 // Grab HTML elements with querySelectorAll and plug data in using for loop and switch statement?
-const d0DateDisplay = document.querySelector("#d-zero-date");
-const d0WeatherDisplay = document.querySelector("#d-zero-weather");
-const d0TempDisplay = document.querySelector("#d-zero-temp");
-const d0WindDisplay = document.querySelector("#d-zero-wind");
-const d0HumidDisplay = document.querySelector("#d-zero-humid");
-
-const d1DateDisplay = document.querySelector("#d-one-date");
-const d1WeatherDisplay = document.querySelector("#d-one-weather");
-const d1TempDisplay = document.querySelector("#d-one-temp");
-const d1WindDisplay = document.querySelector("#d-one-wind");
-const d1HumidDisplay = document.querySelector("#d-one-humid");
-
-const d2DateDisplay = document.querySelector("#d-two-date");
-const d2WeatherDisplay = document.querySelector("#d-two-weather");
-const d2TempDisplay = document.querySelector("#d-two-temp");
-const d2WindDisplay = document.querySelector("#d-two-wind");
-const d2HumidDisplay = document.querySelector("#d-two-humid");
-
-const d3DateDisplay = document.querySelector("#d-three-date");
-const d3WeatherDisplay = document.querySelector("#d-three-weather");
-const d3TempDisplay = document.querySelector("#d-three-temp");
-const d3WindDisplay = document.querySelector("#d-three-wind");
-const d3HumidDisplay = document.querySelector("#d-three-humid");
-
-const d4DateDisplay = document.querySelector("#d-four-date");
-const d4WeatherDisplay = document.querySelector("#d-four-weather");
-const d4TempDisplay = document.querySelector("#d-four-temp");
-const d4WindDisplay = document.querySelector("#d-four-wind");
-const d4HumidDisplay = document.querySelector("#d-four-humid");
-
-const d5DateDisplay = document.querySelector("#d-five-date");
-const d5WeatherDisplay = document.querySelector("#d-five-weather");
-const d5TempDisplay = document.querySelector("#d-five-temp");
-const d5WindDisplay = document.querySelector("#d-five-wind");
-const d5HumidDisplay = document.querySelector("#d-five-humid");
+const dateElArray = document.querySelectorAll(".date");
+const weatherElArray = document.querySelectorAll(".weather");
+const tempElArray = document.querySelectorAll(".temp");
+const windElArray = document.querySelectorAll(".wind");
+const humidElArray = document.querySelectorAll(".humid");
 
 function calculateAverage(array) {
     var total = 0;
@@ -134,41 +104,41 @@ let day5 = {
 let requestURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=d9ae7cf85080aa6d6b35191acb4ad9b0`;
 
 const populateCards = function() {
-    d0DateDisplay.textContent = day0.date;
-    d0WeatherDisplay.textContent = day0.weather;
-    d0TempDisplay.textContent = `${day0.temp} °F`;
-    d0WindDisplay.textContent = `${day0.windSpeed} mph`;
-    d0HumidDisplay.textContent = `${day0.humidity}%`;
+    dateElArray[0].textContent = day0.date;
+    weatherElArray[0].textContent = day0.weather;
+    tempElArray[0].textContent = `${day0.temp} °F`;
+    windElArray[0].textContent = `${day0.windSpeed} mph`;
+    humidElArray[0].textContent = `${day0.humidity}%`;
 
-    d1DateDisplay.textContent = day1.date;
-    d1WeatherDisplay.textContent = day1.weather;
-    d1TempDisplay.textContent = `${day1.temp} °F`;
-    d1WindDisplay.textContent = `${day1.windSpeed} mph`;
-    d1HumidDisplay.textContent = `${day1.humidity}%`;
+    dateElArray[1].textContent = day1.date;
+    weatherElArray[1].textContent = day1.weather;
+    tempElArray[1].textContent = `${day1.temp} °F`;
+    windElArray[1].textContent = `${day1.windSpeed} mph`;
+    humidElArray[1].textContent = `${day1.humidity}%`;
 
-    d2DateDisplay.textContent = day2.date;
-    d2WeatherDisplay.textContent = day2.weather;
-    d2TempDisplay.textContent = `${day2.temp} °F`;
-    d2WindDisplay.textContent = `${day2.windSpeed} mph`;
-    d2HumidDisplay.textContent = `${day2.humidity}%`;
+    dateElArray[2].textContent = day2.date;
+    weatherElArray[2].textContent = day2.weather;
+    tempElArray[2].textContent = `${day2.temp} °F`;
+    windElArray[2].textContent = `${day2.windSpeed} mph`;
+    humidElArray[2].textContent = `${day2.humidity}%`;
 
-    d3DateDisplay.textContent = day3.date;
-    d3WeatherDisplay.textContent = day3.weather;
-    d3TempDisplay.textContent = `${day3.temp} °F`;
-    d3WindDisplay.textContent = `${day3.windSpeed} mph`;
-    d3HumidDisplay.textContent = `${day3.humidity}%`;
+    dateElArray[3].textContent = day3.date;
+    weatherElArray[3].textContent = day3.weather;
+    tempElArray[3].textContent = `${day3.temp} °F`;
+    windElArray[3].textContent = `${day3.windSpeed} mph`;
+    humidElArray[3].textContent = `${day3.humidity}%`;
 
-    d4DateDisplay.textContent = day4.date;
-    d4WeatherDisplay.textContent = day4.weather;
-    d4TempDisplay.textContent = `${day4.temp} °F`;
-    d4WindDisplay.textContent = `${day4.windSpeed} mph`;
-    d4HumidDisplay.textContent = `${day4.humidity}%`;
+    dateElArray[4].textContent = day4.date;
+    weatherElArray[4].textContent = day4.weather;
+    tempElArray[4].textContent = `${day4.temp} °F`;
+    windElArray[4].textContent = `${day4.windSpeed} mph`;
+    humidElArray[4].textContent = `${day4.humidity}%`;
 
-    d5DateDisplay.textContent = day5.date;
-    d5WeatherDisplay.textContent = day5.weather;
-    d5TempDisplay.textContent = `${day5.temp} °F`;
-    d5WindDisplay.textContent = `${day5.windSpeed} mph`;
-    d5HumidDisplay.textContent = `${day5.humidity}%`;
+    dateElArray[5].textContent = day5.date;
+    weatherElArray[5].textContent = day5.weather;
+    tempElArray[5].textContent = `${day5.temp} °F`;
+    windElArray[5].textContent = `${day5.windSpeed} mph`;
+    humidElArray[5].textContent = `${day5.humidity}%`;
 }
 
 fetch(requestURL)
