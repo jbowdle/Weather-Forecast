@@ -1,8 +1,5 @@
 // TODO: Refactor to reduce code bloat
 
-
-// Possible solution to avoid excess code:
-// Grab HTML elements with querySelectorAll and plug data in using for loop and switch statement?
 const dateElArray = document.querySelectorAll(".date");
 const weatherElArray = document.querySelectorAll(".weather");
 const tempElArray = document.querySelectorAll(".temp");
@@ -103,42 +100,39 @@ let day5 = {
 
 let requestURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=d9ae7cf85080aa6d6b35191acb4ad9b0`;
 
+// Populates elements on data cards with weather data
 const populateCards = function() {
-    dateElArray[0].textContent = day0.date;
-    weatherElArray[0].textContent = day0.weather;
-    tempElArray[0].textContent = `${day0.temp} °F`;
-    windElArray[0].textContent = `${day0.windSpeed} mph`;
-    humidElArray[0].textContent = `${day0.humidity}%`;
+    for (let i = 0; i < 6; i++) {
+        let day;
+        // Sets day to object of relevant day number
+        switch (i) {
+            case 0:
+                day = day0;
+                break;
+            case 1:
+                day = day1;
+                break;
+            case 2:
+                day = day2;
+                break;
+            case 3:
+                day = day3;
+                break;
+            case 4:
+                day = day4;
+                break;
+            case 5:
+                day = day5;
+                break;
+        }
 
-    dateElArray[1].textContent = day1.date;
-    weatherElArray[1].textContent = day1.weather;
-    tempElArray[1].textContent = `${day1.temp} °F`;
-    windElArray[1].textContent = `${day1.windSpeed} mph`;
-    humidElArray[1].textContent = `${day1.humidity}%`;
-
-    dateElArray[2].textContent = day2.date;
-    weatherElArray[2].textContent = day2.weather;
-    tempElArray[2].textContent = `${day2.temp} °F`;
-    windElArray[2].textContent = `${day2.windSpeed} mph`;
-    humidElArray[2].textContent = `${day2.humidity}%`;
-
-    dateElArray[3].textContent = day3.date;
-    weatherElArray[3].textContent = day3.weather;
-    tempElArray[3].textContent = `${day3.temp} °F`;
-    windElArray[3].textContent = `${day3.windSpeed} mph`;
-    humidElArray[3].textContent = `${day3.humidity}%`;
-
-    dateElArray[4].textContent = day4.date;
-    weatherElArray[4].textContent = day4.weather;
-    tempElArray[4].textContent = `${day4.temp} °F`;
-    windElArray[4].textContent = `${day4.windSpeed} mph`;
-    humidElArray[4].textContent = `${day4.humidity}%`;
-
-    dateElArray[5].textContent = day5.date;
-    weatherElArray[5].textContent = day5.weather;
-    tempElArray[5].textContent = `${day5.temp} °F`;
-    windElArray[5].textContent = `${day5.windSpeed} mph`;
-    humidElArray[5].textContent = `${day5.humidity}%`;
+        // Respective element of array will have text content set to data of respective day object
+        dateElArray[i].textContent = day.date;
+        weatherElArray[i].textContent = day.weather;
+        tempElArray[i].textContent = `${day.temp} °F`;
+        windElArray[i].textContent = `${day.windSpeed} mph`;
+        humidElArray[i].textContent = `${day.humidity}%`;
+    }
 }
 
 fetch(requestURL)
