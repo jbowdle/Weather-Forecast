@@ -141,10 +141,8 @@ fetch(requestURL)
         return response.json();
     })
     .then(function (data) {
-        // debug
-        console.log(data);
 
-        let date = dayjs.unix(data.list[0].dt);
+        let date = dayjs(data.list[0].dt_txt);
 
         day0.date = dayjs(date).format("MM/DD/YYYY");
         day1.date = dayjs(date.add(1, "day")).format("MM/DD/YYYY");
@@ -155,24 +153,21 @@ fetch(requestURL)
 
         // This for loop sorts all desired data points into their respective day object arrays
         for(let i = 0; i < data.list.length; i++) {
-            let itemDate = dayjs.unix(data.list[i].dt);
-            // debug
-            console.log(itemDate);
-            console.log(dayjs(itemDate).format("MM/DD"));
+            let itemDate = dayjs(data.list[i].dt_txt).format("MM/DD/YYYY");
 
             let day = "";
 
-            if (dayjs(itemDate).format("MM/DD") === dayjs(day0.date).format("MM/DD")) {
+            if (itemDate === day0.date) {
                 day = day0;
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day1.date).format("MM/DD")) {
+            } else if (itemDate === day1.date) {
                 day = day1;
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day2.date).format("MM/DD")) {
+            } else if (itemDate === day2.date) {
                 day = day2;
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day3.date).format("MM/DD")) {
+            } else if (itemDate === day3.date) {
                 day = day3;
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day4.date).format("MM/DD")) {
+            } else if (itemDate === day4.date) {
                 day = day4;
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day5.date).format("MM/DD")) {
+            } else if (itemDate === day5.date) {
                 day = day5;
             }
 
@@ -182,14 +177,6 @@ fetch(requestURL)
             day.humidity.push(data.list[i].main.humidity);
             
         }
-
-        // debug
-        console.log(day0);
-        console.log(day1);
-        console.log(day2);
-        console.log(day3);
-        console.log(day4);
-        console.log(day5);
 
         // Populate cards places the data values into the HTML
         populateCards();
