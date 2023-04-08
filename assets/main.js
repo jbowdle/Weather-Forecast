@@ -52,50 +52,50 @@ const mostFrequent = function(array) {
 let city = "London";
 let day0 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let day1 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let day2 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let day3 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let day4 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let day5 = {
     date: "",
-    weather: "",
-    temp: "",
-    windSpeed: "",
-    humidity: "",
+    weather: [],
+    temp: [],
+    windSpeed: [],
+    humidity: [],
 }
 
 let requestURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=d9ae7cf85080aa6d6b35191acb4ad9b0`;
@@ -126,12 +126,13 @@ const populateCards = function() {
                 break;
         }
 
-        // Respective element of array will have text content set to data of respective day object
+        // day data arrays will be reduced to a single value
+        // Then the element arrays will be cycled through be set to the value of the respective data array
         dateElArray[i].textContent = day.date;
-        weatherElArray[i].textContent = day.weather;
-        tempElArray[i].textContent = `${day.temp} °F`;
-        windElArray[i].textContent = `${day.windSpeed} mph`;
-        humidElArray[i].textContent = `${day.humidity}%`;
+        weatherElArray[i].textContent = mostFrequent(day.weather);
+        tempElArray[i].textContent = `${calculateAverage(day.temp)} °F`;
+        windElArray[i].textContent = `${calculateAverage(day.windSpeed)} mph`;
+        humidElArray[i].textContent = `${calculateAverage(day.humidity)}%`;
     }
 }
 
@@ -145,114 +146,51 @@ fetch(requestURL)
 
         let date = dayjs.unix(data.list[0].dt);
 
-        let day0Date = dayjs(date).format("MM/DD");
-        let day1Date = date.add(1, "day");
-        let day2Date = date.add(2, "day");
-        let day3Date = date.add(3, "day");
-        let day4Date = date.add(4, "day");
-        let day5Date = date.add(5, "day");
+        day0.date = dayjs(date).format("MM/DD/YYYY");
+        day1.date = dayjs(date.add(1, "day")).format("MM/DD/YYYY");
+        day2.date = dayjs(date.add(2, "day")).format("MM/DD/YYYY");
+        day3.date = dayjs(date.add(3, "day")).format("MM/DD/YYYY");
+        day4.date = dayjs(date.add(4, "day")).format("MM/DD/YYYY");
+        day5.date = dayjs(date.add(5, "day")).format("MM/DD/YYYY");
 
-        let day0WeatherArray = [];
-        let day0TempArray = [];
-        let day0WindSpeedArray = [];
-        let day0HumidityArray = [];
-
-        let day1WeatherArray = [];
-        let day1TempArray = [];
-        let day1WindSpeedArray = [];
-        let day1HumidityArray = [];
-
-        let day2WeatherArray = [];
-        let day2TempArray = [];
-        let day2WindSpeedArray = [];
-        let day2HumidityArray = [];
-
-        let day3WeatherArray = [];
-        let day3TempArray = [];
-        let day3WindSpeedArray = [];
-        let day3HumidityArray = [];
-
-        let day4WeatherArray = [];
-        let day4TempArray = [];
-        let day4WindSpeedArray = [];
-        let day4HumidityArray = [];
-
-        let day5WeatherArray = [];
-        let day5TempArray = [];
-        let day5WindSpeedArray = [];
-        let day5HumidityArray = [];
-
+        // This for loop sorts all desired data points into their respective day object arrays
         for(let i = 0; i < data.list.length; i++) {
             let itemDate = dayjs.unix(data.list[i].dt);
+            // debug
+            console.log(itemDate);
+            console.log(dayjs(itemDate).format("MM/DD"));
 
-            if (dayjs(itemDate).format("MM/DD") === dayjs(date).format("MM/DD")) {
-                day0WeatherArray.push(data.list[i].weather[0].main);
-                day0TempArray.push(data.list[i].main.temp);
-                day0WindSpeedArray.push(data.list[i].wind.speed);
-                day0HumidityArray.push(data.list[i].main.humidity);
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day1Date).format("MM/DD")) {
-                day1WeatherArray.push(data.list[i].weather[0].main);
-                day1TempArray.push(data.list[i].main.temp);
-                day1WindSpeedArray.push(data.list[i].wind.speed);
-                day1HumidityArray.push(data.list[i].main.humidity);
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day2Date).format("MM/DD")) {
-                day2WeatherArray.push(data.list[i].weather[0].main);
-                day2TempArray.push(data.list[i].main.temp);
-                day2WindSpeedArray.push(data.list[i].wind.speed);
-                day2HumidityArray.push(data.list[i].main.humidity);
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day3Date).format("MM/DD")) {
-                day3WeatherArray.push(data.list[i].weather[0].main);
-                day3TempArray.push(data.list[i].main.temp);
-                day3WindSpeedArray.push(data.list[i].wind.speed);
-                day3HumidityArray.push(data.list[i].main.humidity);
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day4Date).format("MM/DD")) {
-                day4WeatherArray.push(data.list[i].weather[0].main);
-                day4TempArray.push(data.list[i].main.temp);
-                day4WindSpeedArray.push(data.list[i].wind.speed);
-                day4HumidityArray.push(data.list[i].main.humidity);
-            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day5Date).format("MM/DD")) {
-                day5WeatherArray.push(data.list[i].weather[0].main);
-                day5TempArray.push(data.list[i].main.temp);
-                day5WindSpeedArray.push(data.list[i].wind.speed);
-                day5HumidityArray.push(data.list[i].main.humidity);
+            let day = "";
+
+            if (dayjs(itemDate).format("MM/DD") === dayjs(day0.date).format("MM/DD")) {
+                day = day0;
+            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day1.date).format("MM/DD")) {
+                day = day1;
+            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day2.date).format("MM/DD")) {
+                day = day2;
+            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day3.date).format("MM/DD")) {
+                day = day3;
+            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day4.date).format("MM/DD")) {
+                day = day4;
+            } else if (dayjs(itemDate).format("MM/DD") === dayjs(day5.date).format("MM/DD")) {
+                day = day5;
             }
+
+            day.weather.push(data.list[i].weather[0].main);
+            day.temp.push(data.list[i].main.temp);
+            day.windSpeed.push(data.list[i].wind.speed);
+            day.humidity.push(data.list[i].main.humidity);
+            
         }
 
-        day0.weather = mostFrequent(day0WeatherArray);
-        day0.temp = calculateAverage(day0TempArray);
-        day0.windSpeed = calculateAverage(day0WindSpeedArray);
-        day0.humidity = calculateAverage(day0HumidityArray);
-        day0.date = dayjs(day0Date).format("MM/DD/YYYY");
+        // debug
+        console.log(day0);
+        console.log(day1);
+        console.log(day2);
+        console.log(day3);
+        console.log(day4);
+        console.log(day5);
 
-        day1.weather = mostFrequent(day1WeatherArray);
-        day1.temp = calculateAverage(day1TempArray);
-        day1.windSpeed = calculateAverage(day1WindSpeedArray);
-        day1.humidity = calculateAverage(day1HumidityArray);
-        day1.date = dayjs(day1Date).format("MM/DD/YYYY");
-
-        day2.weather = mostFrequent(day2WeatherArray);
-        day2.temp = calculateAverage(day2TempArray);
-        day2.windSpeed = calculateAverage(day2WindSpeedArray);
-        day2.humidity = calculateAverage(day2HumidityArray);
-        day2.date = dayjs(day2Date).format("MM/DD/YYYY");
-
-        day3.weather = mostFrequent(day3WeatherArray);
-        day3.temp = calculateAverage(day3TempArray);
-        day3.windSpeed = calculateAverage(day3WindSpeedArray);
-        day3.humidity = calculateAverage(day3HumidityArray);
-        day3.date = dayjs(day3Date).format("MM/DD/YYYY");
-
-        day4.weather = mostFrequent(day4WeatherArray);
-        day4.temp = calculateAverage(day4TempArray);
-        day4.windSpeed = calculateAverage(day4WindSpeedArray);
-        day4.humidity = calculateAverage(day4HumidityArray);
-        day4.date = dayjs(day4Date).format("MM/DD/YYYY");
-
-        day5.weather = mostFrequent(day5WeatherArray);
-        day5.temp = calculateAverage(day5TempArray);
-        day5.windSpeed = calculateAverage(day5WindSpeedArray);
-        day5.humidity = calculateAverage(day5HumidityArray);
-        day5.date = dayjs(day5Date).format("MM/DD/YYYY");
-
+        // Populate cards places the data values into the HTML
         populateCards();
     });
