@@ -21,11 +21,14 @@
                 <div class="row bg-success">
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1">Search</span>
-                        <input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" placeholder="City" aria-label="City" aria-describedby="basic-addon1" id="city-search">
                     </div>
                 </div>
                 <!-- History -->
-                <div class="row bg-warning">History</div>
+                <div class="row bg-warning">
+                    <h4>History</h4>
+                    
+                </div>
             </div>
             <!-- Forecast display -->
             <div class="col-md-10 bg-info">
@@ -33,8 +36,9 @@
                 <div class="row">
                     <div class="card" style="width: 18rem;">
                         <div class="card-body">
-                            <h4 class="card-title">City and Date <span class="date"></span></h5>
-                            <h5 class="card-subtitle mb-2 text-muted weather"></h6>
+                            <h4 class="card-title" id="city-display"></h4>
+                            <h4 class="card-title date"></h4>
+                            <h5 class="card-subtitle mb-2 text-muted weather"></h5>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">Temp <span class="temp"></span></li>
                                 <li class="list-group-item">Wind <span class="wind"></span></li>

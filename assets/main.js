@@ -1,10 +1,11 @@
-// TODO: Refactor to reduce code bloat
-
 const dateElArray = document.querySelectorAll(".date");
 const weatherElArray = document.querySelectorAll(".weather");
 const tempElArray = document.querySelectorAll(".temp");
 const windElArray = document.querySelectorAll(".wind");
 const humidElArray = document.querySelectorAll(".humid");
+
+const citySearch = document.querySelector("#city-search");
+const cityDisplay = document.querySelector("#city-display");
 
 function calculateAverage(array) {
     var total = 0;
@@ -49,7 +50,6 @@ const mostFrequent = function(array) {
     return output;
 }
 
-let city = "London";
 let day0 = {
     date: "",
     weather: [],
@@ -98,8 +98,6 @@ let day5 = {
     humidity: [],
 }
 
-let requestURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=d9ae7cf85080aa6d6b35191acb4ad9b0`;
-
 // Populates elements on data cards with weather data
 const populateCards = function() {
     for (let i = 0; i < 6; i++) {
@@ -136,48 +134,61 @@ const populateCards = function() {
     }
 }
 
-fetch(requestURL)
-    .then(function (response) {
-        return response.json();
-    })
-    .then(function (data) {
+const fetchWeather = function(city) {
+    let requestURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=d9ae7cf85080aa6d6b35191acb4ad9b0`;
 
-        let date = dayjs(data.list[0].dt_txt);
+    fetch(requestURL)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            // debug
+            console.log(data);
 
-        day0.date = dayjs(date).format("MM/DD/YYYY");
-        day1.date = dayjs(date.add(1, "day")).format("MM/DD/YYYY");
-        day2.date = dayjs(date.add(2, "day")).format("MM/DD/YYYY");
-        day3.date = dayjs(date.add(3, "day")).format("MM/DD/YYYY");
-        day4.date = dayjs(date.add(4, "day")).format("MM/DD/YYYY");
-        day5.date = dayjs(date.add(5, "day")).format("MM/DD/YYYY");
+            let date = dayjs(data.list[0].dt_txt);
 
-        // This for loop sorts all desired data points into their respective day object arrays
-        for(let i = 0; i < data.list.length; i++) {
-            let itemDate = dayjs(data.list[i].dt_txt).format("MM/DD/YYYY");
+            day0.date = dayjs(date).format("MM/DD/YYYY");
+            day1.date = dayjs(date.add(1, "day")).format("MM/DD/YYYY");
+            day2.date = dayjs(date.add(2, "day")).format("MM/DD/YYYY");
+            day3.date = dayjs(date.add(3, "day")).format("MM/DD/YYYY");
+            day4.date = dayjs(date.add(4, "day")).format("MM/DD/YYYY");
+            day5.date = dayjs(date.add(5, "day")).format("MM/DD/YYYY");
 
-            let day = "";
+            // This for loop sorts all desired data points into their respective day object arrays
+            for(let i = 0; i < data.list.length; i++) {
+                let itemDate = dayjs(data.list[i].dt_txt).format("MM/DD/YYYY");
 
-            if (itemDate === day0.date) {
-                day = day0;
-            } else if (itemDate === day1.date) {
-                day = day1;
-            } else if (itemDate === day2.date) {
-                day = day2;
-            } else if (itemDate === day3.date) {
-                day = day3;
-            } else if (itemDate === day4.date) {
-                day = day4;
-            } else if (itemDate === day5.date) {
-                day = day5;
+                let day = "";
+
+                if (itemDate === day0.date) {
+                    day = day0;
+                } else if (itemDate === day1.date) {
+                    day = day1;
+                } else if (itemDate === day2.date) {
+                    day = day2;
+                } else if (itemDate === day3.date) {
+                    day = day3;
+                } else if (itemDate === day4.date) {
+                    day = day4;
+                } else if (itemDate === day5.date) {
+                    day = day5;
+                }
+
+                day.weather.push(data.list[i].weather[0].main);
+                day.temp.push(data.list[i].main.temp);
+                day.windSpeed.push(data.list[i].wind.speed);
+                day.humidity.push(data.list[i].main.humidity);
+                
             }
 
-            day.weather.push(data.list[i].weather[0].main);
-            day.temp.push(data.list[i].main.temp);
-            day.windSpeed.push(data.list[i].wind.speed);
-            day.humidity.push(data.list[i].main.humidity);
-            
-        }
+            cityDisplay.textContent = data.city.name;
 
-        // Populate cards places the data values into the HTML
-        populateCards();
-    });
+            // Populate cards places the data values into the HTML
+            populateCards();
+        });
+}
+
+citySearch.addEventListener("change", (e) => {
+    let city = e.target.value;
+    fetchWeather(city);
+});
